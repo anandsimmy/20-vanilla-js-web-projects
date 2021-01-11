@@ -1,2 +1,2 @@
 # 20-vanilla-web-projects
-vanilla web projects to make to get better understanding of js and dom
+20 vanilla web projects to make, for having better understanding of js and dom. from brad traversey's udemy course
