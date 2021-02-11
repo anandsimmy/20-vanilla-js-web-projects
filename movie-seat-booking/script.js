@@ -39,5 +39,5 @@ movie.addEventListener('change',() => {
     updateTotalAndCount()
 })
 
-updateTotalAndCount()
-saveDataToLocalStorage(movie.selectedIndex, movie.value)
+// updateTotalAndCount()
+// saveDataToLocalStorage(movie.selectedIndex, movie.value)
