@@ -6,6 +6,22 @@ const movie= document.getElementById('movie')
 
 let ticketPrice= movie.value
 
+const updateUiFromLocal= () => {
+    const selectedSeatsIndex= localStorage.getItem('selectedSeatsIndex')
+    const selectedMovieIndex= localStorage.getItem('selectedMovieIndex') || 0
+    const selectedMovieValue= localStorage.getItem('selectedMovieValue') || 0
+
+    if(selectedSeatsIndex.length>0){
+        [...seats].forEach((seat, index) => {
+            if(selectedSeatsIndex.includes(index)){
+                seat.classList.toggle('selected')
+            }
+        })
+    }
+    movie.selectedIndex= selectedMovieIndex
+    ticketPrice= selectedMovieValue
+}
+
 const saveDataToLocalStorage= (selectedMovieIndex, selectedMovieValue) => {
     localStorage.setItem('selectedMovieIndex', selectedMovieIndex)
     localStorage.setItem('selectedMovieValue', selectedMovieValue)
@@ -39,5 +55,8 @@ movie.addEventListener('change',() => {
     updateTotalAndCount()
 })
 
+
+//executing functions
+updateUiFromLocal()
 updateTotalAndCount()
-// saveDataToLocalStorage(movie.selectedIndex, movie.value)
+saveDataToLocalStorage(movie.selectedIndex, movie.value)
