@@ -96,7 +96,7 @@ const checkButton= document.querySelector('.check-btn')
 const checkOrder= () => {
     console.log(listItems)
     listItems.forEach((item, index) => {
-        if(item.querySelector('.person-name').innerText === richestPeople[index]){
+        if(item.querySelector('.person-name').innerText.trim() === richestPeople[index]){
             item.classList.add('right')
         }else {
             item.classList.add('wrong')
