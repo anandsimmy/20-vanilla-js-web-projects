@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+:root {
+    --over-color: #c8e3ef;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 0 20px 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.draggable-list li {
+    display: flex;
+    background-color: beige;
+    width: 400px;
+    margin: 10px 0;
+}
+
+.draggable-list .draggable.over {
+    background-color: var(--over-color);
+}
+
+.draggable-list li.right .person-name {
+    color: #3ae374;
+}
+
+.draggable-list li.wrong .person-name {
+    color: #ff3838;
+}
+
+.draggable {
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #8bc34a;
+    height: 60px;
+    width: 60px;
+    font-size: 20px;
+} 
+
+.person-name {
+    margin: 0 20px 0 0;
+}
+
+.check-btn {
+    background-color: var(--over-color);
+    color: black;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.check-btn:focus,
+.check-btn:active {
+    outline: none;
+}
+
+.check-btn:active {
+    transform: scale(0.96);
+    transition: all 300 ease-in-out;
+}
