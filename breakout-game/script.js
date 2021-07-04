@@ -81,6 +81,16 @@ const drawScore= () => {
     ctx.fillText(`Score: ${score}`, canvas.width - 100, 30)
 }
 
+const movePaddle= () => {
+    paddle.x += paddle.dx
+
+    if(paddle.x + paddle.w > canvas.width){
+        paddle.x= canvas.width - paddle.w
+    }else if(paddle.x<0){
+        paddle.x= 0
+    }
+}
+
 const draw= () => {
     drawBall()
     drawPaddle()
@@ -88,7 +98,40 @@ const draw= () => {
     drawBricks()
 }
 
-draw()
+const update= () => {
+    //clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    //move paddle
+    movePaddle()
+
+    //draw canavas
+    draw()
+
+    //animation
+    requestAnimationFrame(update)
+}
+
+
+update()
+
+const keyDown= (e) => {
+    if(e.key === 'Right' || e.key === 'ArrowRight'){
+        paddle.dx= paddle.speed
+    }else if(e.key === 'Left' || e.key === 'ArrowLeft'){
+        paddle.dx= -paddle.speed
+    }
+}
+
+const keyUp= (e) => {
+    if(e.key === 'Right' || e.key === 'ArrowRight' || e.key === 'Left' || e.key === 'ArrowLeft'){
+        paddle.dx= 0
+    }
+}
+
+//keyboard listeners for paddle
+document.addEventListener('keydown', keyDown)
+document.addEventListener('keyup', keyUp)
 
 showRulesButton.addEventListener('click', () => {
     rulesDiv.classList.add('show')
