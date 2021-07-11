@@ -12,7 +12,6 @@ const ball= {
     x: canvas.width / 2,
     y: canvas.height / 2,
     size: 10,
-    speed: 4,
     dx: 4,
     dy: -4
 }
@@ -81,21 +80,89 @@ const drawScore= () => {
     ctx.fillText(`Score: ${score}`, canvas.width - 100, 30)
 }
 
-const movePaddle= () => {
-    paddle.x += paddle.dx
-
-    if(paddle.x + paddle.w > canvas.width){
-        paddle.x= canvas.width - paddle.w
-    }else if(paddle.x<0){
-        paddle.x= 0
-    }
-}
-
 const draw= () => {
     drawBall()
     drawPaddle()
     drawScore()
     drawBricks()
+}
+
+const movePaddle= () => {
+    paddle.x += paddle.dx
+
+    if(paddle.x + paddle.w > canvas.width){
+        paddle.x= canvas.width - paddle.w
+    }else if(paddle.x < 0){
+        paddle.x= 0
+    }
+}
+
+const moveBall= () => {
+    ball.x += ball.dx
+    ball.y += ball.dy
+
+    // horizontal collision detection
+    if(ball.x + ball.size >= canvas.width || (ball.x <= 0)){
+        ball.dx = -ball.dx
+    }
+
+    // vertical collision detection
+    if(ball.y <= 0){
+        ball.dy = -ball.dy
+        //checking if its hitting the paddle
+    }else if(
+        ball.y + (ball.size/2) >= paddle.y &&
+        ball.x + (ball.size/2) >= paddle.x &&
+        ball.x - (ball.size/2) <= paddle.x + paddle.w){
+        ball.dy = -ball.dy
+    }else if(ball.y + (ball.size/2) >= paddle.y){
+        ball.dy = -ball.dy
+        resetGame();
+    }
+
+    allBricks.forEach(column => {
+        column.forEach(brick => {
+            if(brick.visibility){
+                if(
+                    ball.x + (ball.size/2) >= brick.x &&
+                    ball.x - (ball.size/2) <= brick.x + brick.w &&
+                    ball.y + (ball.size/2) >= brick.y &&
+                    ball.y - (ball.size/2) <= brick.y + brick.h){
+                        brick.visibility= false;
+                        ball.dy = -ball.dy;
+                        increaseScore();
+                    }
+            }
+        })
+    })   
+}
+
+const increaseScore= () => {
+    score += 45;
+    if(score % (brickRowCount * brickColumnCount) === 0){
+        resetBricks();
+    }
+}
+
+const resetGame= () => {
+    // resetting score
+    score= 0;
+    // ball.x= canvas.width/2;
+    // ball.y= canvas.height/2;
+    // ball.dx= 4;
+    // ball.dy= -4;
+
+    // resetting bricks
+    resetBricks();
+    
+}
+
+const resetBricks= () => {
+    allBricks.forEach(column => {
+        column.forEach(brick => {
+            brick.visibility= true;
+        });
+    });
 }
 
 const update= () => {
@@ -104,6 +171,9 @@ const update= () => {
 
     //move paddle
     movePaddle()
+
+    //move ball
+    moveBall()
 
     //draw canavas
     draw()
