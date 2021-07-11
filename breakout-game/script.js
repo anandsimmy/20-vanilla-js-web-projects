@@ -182,7 +182,6 @@ const update= () => {
     requestAnimationFrame(update)
 }
 
-
 update()
 
 const keyDown= (e) => {
